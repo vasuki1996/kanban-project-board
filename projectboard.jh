@@ -83,5 +83,8 @@ relationship ManyToMany {
 	Issue{users} to User
 }
 
+dto * with mapstruct
+service * with serviceImpl
+
 
 
