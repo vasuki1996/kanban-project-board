@@ -1,0 +1,87 @@
+application{
+	config{
+    	baseName ProjectBoard
+        applicationType microservice
+        packageName com.xlabs.projectboard
+        authenticationType jwt
+        devDatabaseType postgresql
+        prodDatabaseType postgresql
+        clientFramework react
+        enableSwaggerCodegen true
+        skipClient true
+    }
+}
+
+entity Organisation {
+	id Integer
+	orgName String
+    orgUrl String
+    orgDescription String
+    orgEmail String
+    createdAt Instant
+    updatedAt Instant
+}
+
+entity User {
+	id Integer
+    name String
+    email String
+    avatarUrl String
+    password String
+    createdAt Instant
+    updatedAt Instant
+}
+
+entity Project {
+	id Integer
+    name String
+    url String
+    description String
+    category String
+    configuredIssueStates AnyBlob
+    createdAt Instant
+    updatedAt Instant
+}
+
+entity Issue {
+	id Integer
+    title String
+    type String
+    status String
+    priority Integer
+    listPosition Long
+    description String
+    descriptionText String
+    estimate Integer
+    timeSpent Integer
+    timeRemaining Integer
+    createdAt Instant
+    updatedAt Instant
+}
+
+entity Comment {
+	id Integer
+    body String
+    createdAt Instant
+    updatedAt Instant
+}
+
+relationship OneToMany {
+	Organisation{users} to User{organisation}
+    Organisation{projects} to Project{organisation}
+    Project{issues} to Issue{project}
+    Project{users} to User{project}
+    Issue{comments} to Comment{issue}
+}
+
+relationship OneToOne {
+	Project to Organisation
+    Comment to Issue
+}
+
+relationship ManyToMany {
+	Issue{users} to User
+}
+
+
+
